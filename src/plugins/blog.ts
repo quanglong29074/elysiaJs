@@ -2,25 +2,25 @@ import { Elysia, t } from 'elysia';
 import * as blogService from '../services/blogService';
 import { isAuthenticated } from '../middleware/auth';
 
-const blogplugin = new Elysia()
+const blogPlugin = new Elysia()
   .group("/blogs", (group) =>
     group
-      .get("/list", async() => {
-        return await blogService.getAllBlogs()
+      .get("/", async () => {
+        return await blogService.getAllBlogs();
       }, {
         detail: {
           tags: ['Blogs']
         }
       })
-      .get("/list/:id", async({params}) => {
-        const{id} = params
-        return await blogService.getBlogById(id)
+      .get("/:id", async ({ params }) => {
+        const { id } = params;
+        return await blogService.getBlogById(id);
       }, {
         detail: {
           tags: ['Blogs']
         }
       })
-      .post("/createBlog", async ({headers, body }) => {
+      .post("/createBlog", async ({ headers, body }) => {
         const token = headers.authorization;
         const loggedUser = isAuthenticated(token);
         const { title, content, image } = body;
@@ -38,12 +38,12 @@ const blogplugin = new Elysia()
           image: t.String()
         })
       })
-      .put("/updateBlog/:id", async ({headers, body, params }) => {
+      .put("/updateBlog/:id", async ({ headers, body, params }) => {
         const token = headers.authorization;
         const loggedUser = isAuthenticated(token);
-        const {id} = params;
+        const { id } = params;
         const { title, content, image } = body;
-        return await blogService.updateBlog(id, title, content, image, );
+        return await blogService.updateBlog(id, title, content, image);
       }, {
         detail: {
           tags: ['Blogs'],
@@ -57,13 +57,13 @@ const blogplugin = new Elysia()
           image: t.String()
         }),
         params: t.Object({
-            id: t.String()
+          id: t.String()
         })
       })
-      .delete("/deleteBlog/:id", async ({headers, params }) => {
+      .delete("/deleteBlog/:id", async ({ headers, params }) => {
         const token = headers.authorization;
         const loggedUser = isAuthenticated(token);
-        const {id} = params;
+        const { id } = params;
         return await blogService.deleteBlog(id);
       }, {
         detail: {
@@ -73,11 +73,9 @@ const blogplugin = new Elysia()
           ],
         },
         params: t.Object({
-            id: t.String()
+          id: t.String()
         })
       })
-     
-     
   );
 
-export default blogplugin;
+export default blogPlugin;

@@ -17,12 +17,14 @@ const blogSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now
+
   },
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: User.name,
+    ref: 'User',
     required: true
   }
 });
 
 export const Blog = mongoose.model('Blog', blogSchema);
+
