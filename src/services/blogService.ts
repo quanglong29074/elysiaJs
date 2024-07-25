@@ -1,17 +1,12 @@
 import { Blog } from '../entity/blog';
 
 export const getAllBlogs = async () => {
-console.log("here");
-
-  const allBlogs = await Blog.find().populate('user_id', 'username');
-  return allBlogs;
+const allBlogs = await Blog.find().populate('user_id', 'username');
+return allBlogs;
 };
 
 export const getBlogById = async (id: string) => {
-  const blog = await Blog.findOne({ _id: id }).populate('user_id', 'username');
-  if (!blog) {
-    throw new Error('Blog not found');
-  }
+  const blog = await Blog.find({ _id: id }).populate('user_id', 'username');
   return blog;
 };
 
@@ -41,4 +36,15 @@ export const deleteBlog = async (id: string) => {
     throw new Error('Error deleting blog');
   }
   return result;
+};
+
+export const searchBlogs = async (search: string) => {
+  const regex = new RegExp(search, 'i'); // Tạo biểu thức chính quy không phân biệt chữ hoa chữ thường
+  const blogs = await Blog.find({
+    $or: [
+      { title: { $regex: regex } },
+      { content: { $regex: regex } }
+    ]
+  }).populate('user_id', 'username');
+  return blogs;
 };

@@ -2,6 +2,13 @@ import bcrypt from 'bcrypt';
 import { User } from '../entity/User';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 
+export const getAllUser = async () => {
+  console.log("here");
+  
+  const allUser = await User.find();
+  return allUser;
+  };
+
 export const register = async ({ username, password }: { username: string, password: string }) => {
     const existingUser = await User.findOne({ username });
     if (existingUser) {

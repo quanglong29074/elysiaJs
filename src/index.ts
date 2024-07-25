@@ -1,5 +1,6 @@
 import { Elysia, error, t } from 'elysia';
 import { swagger } from '@elysiajs/swagger';
+import { cors } from '@elysiajs/cors'
 import authPlugin from './plugins/auth';
 import blogplugin from './plugins/blog';
 import connectDb from './data-source';
@@ -37,9 +38,12 @@ const app = new Elysia()
   //add more plugins here
 )
  
-  .listen(3000);
+  .listen(3001);
 
-
-app.listen(3000, () => {
+  app.use(cors({
+    origin: 'http://localhost:3000' // hoặc domain của ứng dụng React
+  }));
+  
+app.listen(3001, () => {
   console.log(`🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`);
 });

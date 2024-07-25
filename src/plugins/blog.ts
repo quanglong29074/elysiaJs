@@ -18,7 +18,21 @@ const blogPlugin = new Elysia()
       }, {
         detail: {
           tags: ['Blogs']
-        }
+        },
+        params: t.Object({
+          id: t.String()
+        })
+      })
+       .get("/search", async ({ query }) => {
+        const { search } = query;
+        return await blogService.searchBlogs(search);
+      }, {
+        detail: {
+          tags: ['Blogs']
+        },
+        query: t.Object({
+          search: t.String()
+        })
       })
       .post("/createBlog", async ({ headers, body }) => {
         const token = headers.authorization;
@@ -36,7 +50,8 @@ const blogPlugin = new Elysia()
           title: t.String(),
           content: t.String(),
           image: t.String()
-        })
+        })  
+        
       })
       .put("/updateBlog/:id", async ({ headers, body, params }) => {
         const token = headers.authorization;
@@ -75,7 +90,7 @@ const blogPlugin = new Elysia()
         params: t.Object({
           id: t.String()
         })
-      })
+      })    
   );
 
 export default blogPlugin;

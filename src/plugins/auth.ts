@@ -5,6 +5,13 @@ import { isAuthenticated } from '../middleware/auth';
 const authPlugin = new Elysia()
   .group("/auth", (group) =>
     group
+  .get("/users", async ({  }) => {
+    return await userService.getAllUser();
+  }, {
+    detail: {
+      tags: ['auth'],
+    }
+  })
       .post("/register", async ({ body }) => {
         return await userService.register(body);
       }, {
