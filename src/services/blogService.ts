@@ -30,13 +30,13 @@ export const updateBlog = async (id: string, title: string, content: string, ima
   return blog;
 };
 
-export const deleteBlog = async (id: string) => {
-  const result = await Blog.deleteOne({ _id: id });
-  if (result.deletedCount === 0) {
-    throw new Error('Error deleting blog');
-  }
-  return result;
-};
+// export const deleteBlog = async (id: string) => {
+//   const result = await Blog.deleteOne({ _id: id });
+//   if (result.deletedCount === 0) {
+//     throw new Error('Error deleting blog');
+//   }
+//   return result;
+// };
 
 export const searchBlogs = async (search: string) => {
   const regex = new RegExp(search, 'i'); // Tạo biểu thức chính quy không phân biệt chữ hoa chữ thường
