@@ -32,9 +32,9 @@ export const updateBlog = async (id: string, title: string, content: string, ima
 
 export const deleteBlog = async (id: string) => {
   const result = await Blog.deleteOne({ _id: id });
-  // if (result.deletedCount === 0) {
-  //   throw new Error('Error deleting blog');
-  // }
+  if (result.deletedCount === 0) {
+    throw new Error('Error deleting blog');
+  }
   return result;
 };
 
