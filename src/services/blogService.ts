@@ -18,7 +18,7 @@ export const createBlog = async (title: string, content: string, image: string, 
 
 export const updateBlog = async (id: string, title: string, content: string, image: string) => {
   const blog = await Blog.findOne({ _id: id });
-  console.log(blog)
+  // console.log(blog)
   if (!blog) {
     throw new Error('Blog not found or you do not have permission to update');
   }
