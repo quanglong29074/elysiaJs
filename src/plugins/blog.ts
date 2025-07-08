@@ -12,28 +12,28 @@ const blogPlugin = new Elysia()
           tags: ['Blogs']
         }
       })
-      // .get("/:id", async ({ params }) => {
-      //   const { id } = params;
-      //   return await blogService.getBlogById(id);
-      // }, {
-      //   detail: {
-      //     tags: ['Blogs']
-      //   },
-      //   params: t.Object({
-      //     id: t.String()
-      //   })
-      // })
-       .get("/search", async ({ query }) => {
-        const { search } = query;
-        return await blogService.searchBlogs(search);
+      .get("/:id", async ({ params }) => {
+        const { id } = params;
+        return await blogService.getBlogById(id);
       }, {
         detail: {
           tags: ['Blogs']
         },
-        query: t.Object({
-          search: t.String()
+        params: t.Object({
+          id: t.String()
         })
       })
+      //  .get("/search", async ({ query }) => {
+      //   const { search } = query;
+      //   return await blogService.searchBlogs(search);
+      // }, {
+      //   detail: {
+      //     tags: ['Blogs']
+      //   },
+      //   query: t.Object({
+      //     search: t.String()
+      //   })
+      // })
       .post("/createBlog", async ({ headers, body }) => {
         const token = headers.authorization;
         const loggedUser = isAuthenticated(token);
