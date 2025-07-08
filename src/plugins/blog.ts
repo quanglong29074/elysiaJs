@@ -5,24 +5,24 @@ import { isAuthenticated } from '../middleware/auth';
 const blogPlugin = new Elysia()
   .group("/blogs", (group) =>
     group
-      // .get("/", async () => {
-      //   return await blogService.getAllBlogs();
-      // }, {
-      //   detail: {
-      //     tags: ['Blogs']
-      //   }
-      // })
-      .get("/:id", async ({ params }) => {
-        const { id } = params;
-        return await blogService.getBlogById(id);
+      .get("/", async () => {
+        return await blogService.getAllBlogs();
       }, {
         detail: {
           tags: ['Blogs']
-        },
-        params: t.Object({
-          id: t.String()
-        })
+        }
       })
+      // .get("/:id", async ({ params }) => {
+      //   const { id } = params;
+      //   return await blogService.getBlogById(id);
+      // }, {
+      //   detail: {
+      //     tags: ['Blogs']
+      //   },
+      //   params: t.Object({
+      //     id: t.String()
+      //   })
+      // })
        .get("/search", async ({ query }) => {
         const { search } = query;
         return await blogService.searchBlogs(search);
