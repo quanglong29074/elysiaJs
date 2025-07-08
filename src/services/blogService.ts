@@ -1,9 +1,9 @@
 import { Blog } from '../entity/blog';
 
-export const getAllBlogs = async () => {
-const allBlogs = await Blog.find().populate('user_id', 'username');
-return allBlogs;
-};
+// export const getAllBlogs = async () => {
+// const allBlogs = await Blog.find().populate('user_id', 'username');
+// return allBlogs;
+// };
 
 export const getBlogById = async (id: string) => {
   const blog = await Blog.find({ _id: id }).populate('user_id', 'username');
