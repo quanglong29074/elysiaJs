@@ -5,13 +5,13 @@ import { isAuthenticated } from '../middleware/auth';
 const blogPlugin = new Elysia()
   .group("/blogs", (group) =>
     group
-      .get("/", async () => {
-        return await blogService.getAllBlogs();
-      }, {
-        detail: {
-          tags: ['Blogs']
-        }
-      })
+      // .get("/", async () => {
+      //   return await blogService.getAllBlogs();
+      // }, {
+      //   detail: {
+      //     tags: ['Blogs']
+      //   }
+      // })
       .get("/:id", async ({ params }) => {
         const { id } = params;
         return await blogService.getBlogById(id);
