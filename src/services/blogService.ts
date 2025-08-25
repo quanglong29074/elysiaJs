@@ -27,7 +27,20 @@ export const getAllBlogs = async (title: string , startDate: Date, endDate: Date
     }
 };
 
-export const getBlogById = async (id: string) => {
+export const getBlogById = async (id: string, title: string , startDate: Date, endDate: Date) => {
+    const query: any = {};
+
+    // lọc theo title (tìm gần đúng, không phân biệt hoa thường)
+    if (title) {
+        query.title = { $regex: title, $options: "i" };
+    }
+
+    // lọc theo createdAt trong khoảng startDate - endDate
+    if (startDate || endDate) {
+        query.createdAt = {};
+        if (startDate) query.createdAt.$gte = startDate;
+        if (endDate) query.createdAt.$lte = endDate;
+    }
     const blog = await Blog.find({_id: id}).populate('user_id', 'username');
     return blog;
 };
