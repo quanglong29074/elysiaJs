@@ -41,7 +41,7 @@ export const getBlogById = async (id: string, title: string , startDate: Date, e
         if (startDate) query.createdAt.$gte = startDate;
         if (endDate) query.createdAt.$lte = endDate;
     }
-    const blog = await Blog.find({_id: id}).populate('user_id', 'username');
+    const blog = await Blog.find({_id: id}).find(query).populate('user_id', 'username');
     return blog;
 };
 
