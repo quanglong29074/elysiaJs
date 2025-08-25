@@ -41,20 +41,30 @@ export const updateBlog = async (id: string, title: string, content: string, ima
 };
 
 export const deleteBlog = async (id: string) => {
-    const result = await Blog.deleteOne({_id: id});
-    if (result.deletedCount === 0) {
-        throw new Error('Error deleting blog');
+    try {
+        const result = await Blog.deleteOne({_id: id});
+        if (result.deletedCount === 0) {
+            throw new Error('Error deleting blog');
+        }
+        return result;
+    } catch (error) {
+        console.error('Error deleting blog:', error);
+        throw new Error('Could not delete blog');
     }
-    return result;
 };
 
 export const searchBlogs = async (search: string) => {
-    const regex = new RegExp(search, 'i'); // Tạo biểu thức chính quy không phân biệt chữ hoa chữ thường
-    const blogs = await Blog.find({
-        $or: [
-            {title: {$regex: regex}},
-            {content: {$regex: regex}}
-        ]
-    }).populate('user_id', 'username');
-    return blogs;
+    try {
+        const regex = new RegExp(search, 'i'); // Tạo biểu thức chính quy không phân biệt chữ hoa chữ thường
+        const blogs = await Blog.find({
+            $or: [
+                {title: {$regex: regex}},
+                {content: {$regex: regex}}
+            ]
+        }).populate('user_id', 'username');
+        return blogs;
+    } catch (error) {
+        console.error('Error searching blogs:', error);
+        throw new Error('Could not search blogs');
+    }
 };
