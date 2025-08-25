@@ -1,12 +1,29 @@
 import {Blog} from '../entity/blog';
 
-export const getAllBlogs = async () => {
+export const getAllBlogs = async (title: string , startDate: Date, endDate: Date) => {
     try {
-        const allBlogs = await Blog.find().populate('user_id', 'username');
+        const query: any = {};
+
+        // lọc theo title (tìm gần đúng, không phân biệt hoa thường)
+        if (title) {
+            query.title = { $regex: title, $options: "i" };
+        }
+
+        // lọc theo createdAt trong khoảng startDate - endDate
+        if (startDate || endDate) {
+            query.createdAt = {};
+            if (startDate) query.createdAt.$gte = startDate;
+            if (endDate) query.createdAt.$lte = endDate;
+        }
+
+        const allBlogs = await Blog.find(query)
+            .populate("user_id", "username")
+            .sort({ createdAt: -1 }); // ví dụ sắp xếp mới nhất trước
+
         return allBlogs;
     } catch (error) {
-        console.error('Error fetching blogs:', error);
-        throw new Error('Could not fetch blogs');
+        console.error("Error fetching blogs:", error);
+        throw new Error("Could not fetch blogs");
     }
 };
 
