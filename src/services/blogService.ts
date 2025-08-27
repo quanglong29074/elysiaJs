@@ -74,7 +74,6 @@ export const deleteBlog = async (id: string) => {
 };
 
 export const searchBlogs = async (search: string) => {
-    try {
         const regex = new RegExp(search, 'i'); // Tạo biểu thức chính quy không phân biệt chữ hoa chữ thường
         const blogs = await Blog.find({
             $or: [
@@ -83,8 +82,4 @@ export const searchBlogs = async (search: string) => {
             ]
         }).populate('user_id', 'username');
         return blogs;
-    } catch (error) {
-        console.error('Error searching blogs:', error);
-        throw new Error('Could not search blogs');
-    }
 };
