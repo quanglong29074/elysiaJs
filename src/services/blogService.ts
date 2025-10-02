@@ -66,6 +66,10 @@ export const updateBlog = async (id: string, title: string, content: string, ima
 };
 
 export const deleteBlog = async (id: string) => {
+    const blog = await Blog.findOne({_id: id});
+    if (!blog) {
+            throw new Error('Blog not found or you do not have permission to delete');
+    }
         const result = await Blog.deleteOne({_id: id});
         if (result.deletedCount === 0) {
             throw new Error('Error deleting blog');
