@@ -75,22 +75,22 @@ const blogPlugin = new Elysia()
           id: t.String()
         })
       })
-      .delete("/deleteBlog/:id", async ({ headers, params }) => {
-        const token = headers.authorization;
-        const loggedUser = isAuthenticated(token);
-        const { id } = params;
-        return await blogService.deleteBlog(id);
-      }, {
-        detail: {
-          tags: ['Blogs'],
-          security: [
-            { JwtAuth: [] }
-          ],
-        },
-        params: t.Object({
-          id: t.String()
-        })
-      })
-  );
+//       .delete("/deleteBlog/:id", async ({ headers, params }) => {
+//         const token = headers.authorization;
+//         const loggedUser = isAuthenticated(token);
+//         const { id } = params;
+//         return await blogService.deleteBlog(id);
+//       }, {
+//         detail: {
+//           tags: ['Blogs'],
+//           security: [
+//             { JwtAuth: [] }
+//           ],
+//         },
+//         params: t.Object({
+//           id: t.String()
+//         })
+//       })
+//   );
 
-export default blogPlugin;
+// export default blogPlugin;
